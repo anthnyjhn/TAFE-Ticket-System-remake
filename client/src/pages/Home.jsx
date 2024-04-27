@@ -8,6 +8,7 @@ function Home() {
   const PageRedirection = (e) => {
     switch (e.target.value) {
       case "Log Ticket":
+        window.location.href = "http://localhost:5173/log"
         break;
       case "View Tickets":
         window.location.href = "http://localhost:5173/view"
