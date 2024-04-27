@@ -1,6 +1,5 @@
 import React from "react";
 import Header from "../components/Header";
-import Footer from "../components/Footer";
 
 import '../assets/styles/Home.css'
 
@@ -11,6 +10,7 @@ function Home() {
       case "Log Ticket":
         break;
       case "View Tickets":
+        window.location.href = "http://localhost:5173/view"
         break;
       default:
         break;
@@ -27,7 +27,6 @@ function Home() {
           <input type="button" value="View Tickets" onClick={PageRedirection} id="view"/>
           <input type="button" value="Exit" onClick={PageRedirection} id="ext"/>
         </div>
-        <Footer/>
       </div>
     </>
   );
