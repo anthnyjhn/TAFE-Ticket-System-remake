@@ -32,7 +32,7 @@ select {
 /* Styling for input fields */
 input[type="text"],
 input[type="email"],
-input[type="date"] {
+input[type="datetime-local"] {
   width: 100%;
   height: calc(2.25rem + 2px);
   padding: 0.375rem 0.75rem;

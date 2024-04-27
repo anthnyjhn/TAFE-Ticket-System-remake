@@ -120,7 +120,7 @@ const Log = () => {
               <div className="form-group col-md-4">
                 <label htmlFor="dueDate">Date Logged</label>
                 <input
-                  type="date"
+                  type="datetime-local"
                   className="form-control"
                   id="dueDate"
                   name="DateLogged"
@@ -157,7 +157,7 @@ const Log = () => {
                 <div className="form-group col-md-4">
                   <label htmlFor="dueDate">Date Resolved</label>
                   <input
-                    type="date"
+                    type="datetime-local"
                     className="form-control"
                     id="dueDate"
                     name="DateResolved"
