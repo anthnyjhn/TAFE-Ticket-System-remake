@@ -11,7 +11,7 @@ function App() {
       <Routes>
         <Route exact path='/' element={<Home/>}/>
         <Route path='/view' element={<View/>}/>
-        <Route path='/create' element={<Create/>}/>
+        <Route path='/log' element={<Create/>}/>
       </Routes>
     </BrowserRouter>
   )
