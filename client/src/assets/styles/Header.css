@@ -1,0 +1,35 @@
+.main-header {
+    display: flex;
+    place-content:center;
+    background-color: white;
+}
+
+.main-header img {
+    height: 3rem;
+    margin: 1rem 0;
+}
+
+.grey-bar {
+    height: 0.25rem;
+    background-color: #94B2BF;
+    width: 100vw;
+}
+
+.green-bar {
+    height: 0.5rem;
+    background-color: #077A99;
+    width: 100vw;
+}
+
+.blue-bar {
+    height: 1rem;
+    background-color: rgb(66,71,84);
+    width: 100vw;
+}
+
+h1 {
+    color: #DDAB5E;
+    font-family: 'Times New Roman', Times, serif;
+    display: block;
+    font-weight: 600;
+}
