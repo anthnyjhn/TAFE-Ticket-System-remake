@@ -32,16 +32,40 @@ const View = () => {
     GetTicketData();
   }, []);
 
+  const DeleteActionRequest = (tix_id) => {
+    try {
+      Axios.delete(`http://localhost:3000/api/delete/${tix_id}`).then((res) => {
+        console.log(res)
+        window.location.href = "http://localhost:5173/tickets"
+      })
+    } catch (err) {
+      if (err) throw err
+    }
+  };
+  const ViewActionRequest = (tix_id) => {
+    window.location.href = `http://localhost:5173/view/${tix_id}`;
+  };
+
   const TicketRows = ticketData.map((v, i) => (
-    <tr key={v.TicketId}>
+    
+    <tr key={i}>
       <td className="tx-id">{v.TicketId}</td>
       <td>{v.Assignee}</td>
       <td>{v.Summary}</td>
       <td>{v.Status}</td>
       <td className="action-cell">
-        <input type="button" value="View" id="view-btn" />
-        <input type="button" value="Edit" id="edit-btn" />
-        <input type="button" value="Delete" id="delete-btn" />
+        <input
+          type="button"
+          value="View"
+          id="view-btn"
+          onClick={() => ViewActionRequest(v.TicketId)}
+        />
+        <input
+          type="button"
+          value="Delete"
+          id="delete-btn"
+          onClick={() => DeleteActionRequest(v.TicketId)}
+        />
       </td>
     </tr>
   ));
@@ -54,25 +78,22 @@ const View = () => {
         <div className="content">
           <table>
             <thead>
-            <tr>
-              <th>Ticket #</th>
-              <th>Client</th>
-              <th>Subject</th>
-              <th>Status</th>
-              <th>Actions</th>
-            </tr>
+              <tr>
+                <th>Ticket #</th>
+                <th>Client</th>
+                <th>Subject</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
             </thead>
-            <tbody>
-            {TicketRows}
-            </tbody>
-
+            <tbody>{TicketRows}</tbody>
           </table>
           <input
-              type="button"
-              value="Back to Main Page"
-              id="menu-btn"
-              onClick={RedirectPage}
-            />
+            type="button"
+            value="Back to Main Page"
+            id="menu-btn"
+            onClick={RedirectPage}
+          />
         </div>
       </div>
     </>

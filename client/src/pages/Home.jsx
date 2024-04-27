@@ -11,7 +11,7 @@ function Home() {
         window.location.href = "http://localhost:5173/log"
         break;
       case "View Tickets":
-        window.location.href = "http://localhost:5173/view"
+        window.location.href = "http://localhost:5173/tickets"
         break;
       default:
         break;

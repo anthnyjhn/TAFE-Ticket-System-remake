@@ -2,6 +2,7 @@ table {
   border-collapse: collapse;
   overflow: auto;
   width: 90vw;
+  border: 1px solid black;
 }
 
 th {
@@ -9,7 +10,8 @@ th {
 }
 
 th,
-td {
+td,
+tr {
   border: 1px solid black;
   padding: 8px;
   text-align: center;
@@ -44,7 +46,7 @@ td input[type="button"] {
 }
 
 #menu-btn {
-  background-color: #6C757D;
+  background-color: #6c757d;
 
   color: white;
   border: none;
@@ -61,4 +63,5 @@ td input[type="button"] {
   display: flex;
   justify-content: space-around;
   align-items: center;
+  border: 0;
 }

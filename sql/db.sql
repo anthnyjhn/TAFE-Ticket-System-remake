@@ -25,3 +25,12 @@ CREATE TABLE Tickets (
     CONSTRAINT FK_Assignee FOREIGN KEY (Assignee) REFERENCES admins(Username),
     CONSTRAINT PK_Ticket PRIMARY KEY (TicketId)
 );
+
+-- Get Admin List
+SELECT Username FROM admins;
+
+-- Get Ticket List
+SELECT * FROM tickets;
+
+-- Add Admins
+INSERT INTO admins(Username) VALUES ('John');

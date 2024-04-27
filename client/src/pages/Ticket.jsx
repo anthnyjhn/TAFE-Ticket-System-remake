@@ -1,35 +1,48 @@
-import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { useEffect, useState, useRef } from "react";
 import Header from "../components/Header";
 import Axios from "axios";
-import "../assets/styles/Log.css";
 
-const Log = () => {
-  const [formData, setFormData] = useState({
-    Summary: "",
-    Description: "",
-    Urgency: "",
-    Impact: "",
-    Priority: "",
-    DateLogged: "",
-    Assignee: "",
-    Status: "",
-    DateResolved: "",
-    Solution: "",
-    Feedback: "",
-  });
+const Ticket = () => {
+  const { TicketId } = useParams();
+
+  console.log("Param ticket ID: " + TicketId);
+
+  const formData = useRef(0)
+
+  useEffect(() => {
+    console.log("Ticket Id changes");
+    const getExistingFormData = async () => {
+      try {
+        if (TicketId) {
+          console.log(`http://localhost:3000/api/ticket/${TicketId}`);
+          await Axios.get(`http://localhost:3000/api/ticket/${TicketId}`).then((res)=> {
+            formData.current = res.data
+          }) ;
+          
+          DisplayLoadedFormData(); // Call DisplayLoadedFormData here
+        }
+      } catch (err) {
+        if (err) throw err;
+      }
+    };
+
+    getExistingFormData();
+  }, [TicketId]);
 
   const [assignees, SetAssignees] = useState([{}]);
 
   const dataInputHandler = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    console.log("Input Changed: ", { [e.target.name]: e.target.value });
+    formData.current[0][e.target.name] = e.target.value;
+    console.log(formData.current)
   };
 
   const submitHandler = () => {
     console.log(formData);
     try {
-      Axios.post("http://localhost:3000/api/create", formData).then((req) => {
+      Axios.put("http://localhost:3000/api/update", formData.current).then((req) => {
         console.log(req);
-        window.location.href = "http://localhost:5173/tickets"
       });
     } catch (err) {
       if (err) throw err;
@@ -37,9 +50,9 @@ const Log = () => {
   };
 
   useEffect(() => {
-    const getAssignees = () => {
+    const getAssignees = async () => {
       try {
-        Axios.get("http://localhost:3000/api/admins").then((res) => {
+        await Axios.get("http://localhost:3000/api/admins").then((res) => {
           SetAssignees(res.data);
         });
       } catch (err) {
@@ -55,6 +68,27 @@ const Log = () => {
       {v.Username}
     </option>
   ));
+
+  const DisplayLoadedFormData = () => {
+    if (!formData) {
+      return;
+    }
+    const TicketData = formData.current[0];
+
+    for (const key in TicketData) {
+      if (Object.hasOwnProperty.call(TicketData, key)) {
+        console.log(key, ": ", TicketData[key]);
+        const inputElement = document.getElementById(`issue${key}`);
+        if (key != 'TicketId') {
+          if (key == "DateLogged" || key == "DateResolved") {
+            inputElement.value = TicketData[key].split("T")[0];
+          } else {
+            inputElement.value = TicketData[key];
+          }
+        }
+      }
+    }
+  };
 
   return (
     <>
@@ -72,6 +106,7 @@ const Log = () => {
                 name="Summary"
                 placeholder="Enter a brief summary of the issue"
                 onChange={dataInputHandler}
+                required
               />
             </div>
 
@@ -84,6 +119,7 @@ const Log = () => {
                 rows="3"
                 placeholder="Describe the IT issue in detail"
                 onChange={dataInputHandler}
+                required
               ></textarea>
             </div>
             <hr />
@@ -92,9 +128,10 @@ const Log = () => {
                 <label htmlFor="urgency">Urgency</label>
                 <select
                   className="form-control"
-                  id="urgency"
+                  id="issueUrgency"
                   name="Urgency"
                   onChange={dataInputHandler}
+                  required
                 >
                   <option value=""> </option>
                   <option value="minor">Minor</option>
@@ -106,9 +143,10 @@ const Log = () => {
                 <label htmlFor="impact">Impact</label>
                 <select
                   className="form-control"
-                  id="impact"
+                  id="issueImpact"
                   name="Impact"
                   onChange={dataInputHandler}
+                  required
                 >
                   <option value=""> </option>
                   <option value="individual">
@@ -129,9 +167,10 @@ const Log = () => {
                 <label htmlFor="priority">Priority</label>
                 <select
                   className="form-control"
-                  id="priority"
+                  id="issuePriority"
                   name="Priority"
                   onChange={dataInputHandler}
+                  required
                 >
                   <option value=""> </option>
                   <option value="low">Low</option>
@@ -153,6 +192,7 @@ const Log = () => {
                   name="DateLogged"
                   placeholder="today"
                   onChange={dataInputHandler}
+                  required
                 />
               </div>
 
@@ -160,9 +200,10 @@ const Log = () => {
                 <label htmlFor="assignee">Assignee</label>
                 <select
                   className="form-control"
-                  id="assignee"
+                  id="issueAssignee"
                   name="Assignee"
                   onChange={dataInputHandler}
+                  required
                 >
                   <option value=""> </option>
                   {AssigneeOptions}
@@ -172,9 +213,10 @@ const Log = () => {
                 <label htmlFor="status">Status</label>
                 <select
                   className="form-control"
-                  id="status"
+                  id="issueStatus"
                   name="Status"
                   onChange={dataInputHandler}
+                  required
                 >
                   <option value=""> </option>
                   <option value="Open">Open</option>
@@ -187,10 +229,11 @@ const Log = () => {
                   <input
                     type="date"
                     className="form-control"
-                    id="dueDate"
+                    id="issueDateResolved"
                     name="DateResolved"
                     placeholder="today"
                     onChange={dataInputHandler}
+                    required
                   />
                 </div>
                 <hr />
@@ -201,11 +244,12 @@ const Log = () => {
               <label htmlFor="solution">Solution</label>
               <textarea
                 className="form-control"
-                id="solution"
+                id="issueSolution"
                 name="Solution"
                 rows="3"
                 placeholder="Describe the solution provided"
                 onChange={dataInputHandler}
+                required
               ></textarea>
             </div>
 
@@ -213,11 +257,12 @@ const Log = () => {
               <label htmlFor="comments">Comments/Feedback</label>
               <textarea
                 className="form-control"
-                id="comments"
+                id="issueFeedback"
                 name="Feedback"
                 rows="3"
                 placeholder="Add any additional comments or notes"
                 onChange={dataInputHandler}
+                required
               ></textarea>
             </div>
             <hr />
@@ -228,7 +273,7 @@ const Log = () => {
               data-target="#saveModal"
               onClick={submitHandler}
             >
-              Create Issue
+              Update Ticket
             </button>
           </form>
         </div>
@@ -237,4 +282,4 @@ const Log = () => {
   );
 };
 
-export default Log;
+export default Ticket;
