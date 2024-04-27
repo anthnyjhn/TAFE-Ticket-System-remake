@@ -4,6 +4,10 @@ table {
   width: 90vw;
 }
 
+th {
+  background-color: rgb(199, 199, 199);
+}
+
 th,
 td {
   border: 1px solid black;
@@ -16,7 +20,7 @@ tr:nth-child(odd) {
 }
 
 table tr:hover {
-  background-color: #ebebeb;
+  background-color: #f1f1f1;
 }
 
 td input[type="button"] {
@@ -33,4 +37,18 @@ td input[type="button"] {
 
 #delete-btn {
   background-color: #d93030;
+}
+
+#menu-btn {
+  background-color: #6C757D;
+
+  color: white;
+  border: none;
+  border-radius: 0.2rem;
+  height: 2rem;
+  margin: 1rem 0;
+}
+
+.tx-id {
+  font-weight: bold;
 }

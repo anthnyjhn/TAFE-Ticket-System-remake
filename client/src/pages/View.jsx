@@ -3,6 +3,17 @@ import HeaderComp from "../components/Header";
 import "../assets/styles/View.css";
 
 const View = () => {
+  const RedirectPage = (e) => {
+    switch (e.target.value) {
+      case "Back to Main Page":
+        window.location.href = "http://localhost:5173/";
+        break;
+
+      default:
+        break;
+    }
+  };
+
   return (
     <>
       <div className="main">
@@ -18,7 +29,7 @@ const View = () => {
               <th>Actions</th>
             </tr>
             <tr>
-              <td>1</td>
+              <td className="tx-id">1</td>
               <td>Chris Smith</td>
               <td>
                 Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sint,
@@ -31,6 +42,12 @@ const View = () => {
               </td>
             </tr>
             {}
+            <input
+              type="button"
+              value="Back to Main Page"
+              id="menu-btn"
+              onClick={RedirectPage}
+            />
           </table>
         </div>
       </div>
