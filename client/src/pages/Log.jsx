@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
+import Axios from "axios";
 import "../assets/styles/Log.css";
 
 const Log = () => {
@@ -19,6 +20,8 @@ const Log = () => {
     Feedback: "",
   });
 
+  const [assignees, SetAssignees] = useState([{}]);
+
   const dataInputHandler = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -28,6 +31,24 @@ const Log = () => {
     console.log(formData);
     console.log(e);
   };
+
+  useEffect(()=> {
+    const getAssignees = () => {
+      try {
+        Axios.get("http://localhost:3000/api/admins").then(res=> {
+          SetAssignees(res.data)
+        })
+      } catch (err) {
+        if (err) throw err
+      }
+    }
+
+    getAssignees()
+  },[])
+
+  const AssigneeOptions = assignees.map((v,i) => ( 
+    <option value={v.Username} key={i}>{v.Username}</option>
+  ))
 
   return (
     <>
@@ -120,7 +141,7 @@ const Log = () => {
               <div className="form-group col-md-4">
                 <label htmlFor="dueDate">Date Logged</label>
                 <input
-                  type="datetime-local"
+                  type="date"
                   className="form-control"
                   id="dueDate"
                   name="DateLogged"
@@ -131,14 +152,15 @@ const Log = () => {
 
               <div className="form-group col-md-4">
                 <label htmlFor="assignee">Assignee</label>
-                <input
-                  type="text"
+                <select
                   className="form-control"
                   id="assignee"
                   name="Assignee"
-                  placeholder="Assign the issue to - your name & student number"
                   onChange={dataInputHandler}
-                />
+                >
+                  <option value=""> </option>
+                  {AssigneeOptions}
+                </select>
               </div>
               <div className="form-group col-md-4">
                 <label htmlFor="status">Status</label>
@@ -157,7 +179,7 @@ const Log = () => {
                 <div className="form-group col-md-4">
                   <label htmlFor="dueDate">Date Resolved</label>
                   <input
-                    type="datetime-local"
+                    type="date"
                     className="form-control"
                     id="dueDate"
                     name="DateResolved"

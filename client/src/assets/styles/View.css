@@ -39,6 +39,10 @@ td input[type="button"] {
   background-color: #d93030;
 }
 
+#edit-btn {
+  background-color: #d99030;
+}
+
 #menu-btn {
   background-color: #6C757D;
 
@@ -51,4 +55,10 @@ td input[type="button"] {
 
 .tx-id {
   font-weight: bold;
+}
+
+.action-cell {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
