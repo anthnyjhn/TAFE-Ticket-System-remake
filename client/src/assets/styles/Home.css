@@ -1,0 +1,42 @@
+.action-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.action-buttons input {
+    width: 20rem;
+    height: 3rem;
+    color: white;
+    border: 0;
+    border-radius: 0.25rem;
+    font-size: large ;
+}
+
+h2 {
+    text-align: center;
+    width: 15rem;
+}
+
+#ext {
+    background-color: #B11030;
+}
+
+#log {
+    background-color: #294CBC;
+}
+
+#view {
+    background-color: #0A7C98
+}
